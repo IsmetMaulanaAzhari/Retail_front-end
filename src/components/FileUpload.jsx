@@ -1,11 +1,21 @@
-import React, { useState, useRef } from 'react'
-import { uploadFile } from '../services/apiClient'
+import React, { useState, useRef, useEffect } from 'react'
+import { uploadFile, checkBackendHealth } from '../services/apiClient'
 import './FileUpload.css'
 
 const FileUpload = ({ onUploadSuccess, onUploadError }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [backendOnline, setBackendOnline] = useState(null)
   const fileInputRef = useRef(null)
+
+  useEffect(() => {
+    checkBackend()
+  }, [])
+
+  const checkBackend = async () => {
+    const isOnline = await checkBackendHealth()
+    setBackendOnline(isOnline)
+  }
 
   const handleFileSelect = async (event) => {
     const file = event.target.files?.[0]
@@ -13,13 +23,21 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
 
     // Validate file type
     if (!file.name.endsWith('.csv')) {
-      onUploadError?.('Hanya file CSV yang diizinkan')
+      onUploadError?.('❌ Hanya file CSV yang diizinkan')
       return
     }
 
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
-      onUploadError?.('Ukuran file terlalu besar (max 10MB)')
+      onUploadError?.('❌ Ukuran file terlalu besar (max 10MB)')
+      return
+    }
+
+    // Check backend
+    const isOnline = await checkBackendHealth()
+    setBackendOnline(isOnline)
+    if (!isOnline) {
+      onUploadError?.('⚠️ Backend tidak terhubung. Pastikan Backend FastAPI running di http://localhost:8000')
       return
     }
 
@@ -54,7 +72,9 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
     } catch (error) {
       setIsLoading(false)
       setUploadProgress(0)
-      onUploadError?.(error.message || 'Gagal upload file')
+      console.error('Upload error:', error)
+      const errorMsg = error.message || 'Gagal upload file'
+      onUploadError?.(`❌ ${errorMsg}`)
     }
   }
 
@@ -79,6 +99,12 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
 
   return (
     <div className="file-upload-container">
+      {backendOnline === false && (
+        <div className="backend-error-banner">
+          ⚠️ Backend tidak terhubung - Pastikan Backend FastAPI running di http://localhost:8000
+        </div>
+      )}
+
       <div
         className="upload-area"
         onDragOver={handleDragOver}
@@ -117,7 +143,7 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
         {isLoading && (
           <div className="loading-spinner">
             <div className="spinner"></div>
-            <p>Memproses file...</p>
+            <p>Memproses file dengan ML...</p>
           </div>
         )}
       </div>
@@ -128,6 +154,16 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
           File CSV harus memiliki kolom-kolom seperti: ID, Nama, Harga, Stok, Kategori, dll.
           Sistem akan otomatis mendeteksi dan memetakan kolom ke standar BigQuery.
         </p>
+        <div className="sample-columns">
+          <strong>Contoh kolom:</strong>
+          <div className="columns-list">
+            <span>kd_brg</span>
+            <span>nm_brg</span>
+            <span>hrg_jual</span>
+            <span>jml_stk</span>
+            <span>diskon</span>
+          </div>
+        </div>
       </div>
     </div>
   )

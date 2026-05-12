@@ -1,22 +1,25 @@
 .data-preview-container {
   background: white;
   border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
+  backdrop-filter: blur(10px);
 }
 
 .data-preview-empty {
   background: rgba(255, 255, 255, 0.1);
   border: 2px dashed rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  padding: 60px 24px;
+  padding: 80px 24px;
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
   font-size: 16px;
+  font-weight: 500;
   margin-top: 20px;
+  letter-spacing: 0.2px;
 }
 
 .preview-header {
@@ -24,84 +27,108 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #f0f0f0;
 }
 
 .preview-title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 800;
   color: #333;
+  letter-spacing: -0.5px;
 }
 
 .success-badge {
   background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
   color: white;
-  padding: 6px 12px;
+  padding: 8px 16px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
   white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+  letter-spacing: 0.3px;
 }
 
 .mapping-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .section-title {
   margin: 0;
   font-size: 14px;
-  font-weight: 600;
-  color: #555;
+  font-weight: 800;
+  color: #333;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .mapping-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
 }
 
 .mapping-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px;
-  background: #f8f9fa;
-  border-radius: 8px;
+  gap: 12px;
+  padding: 14px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f3 100%);
+  border-radius: 10px;
   border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.mapping-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: #d5deff;
 }
 
 .mapping-source {
   flex: 1;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: white;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 13px;
-  font-weight: 500;
-  color: #666;
+  font-weight: 600;
+  color: #555;
   border: 1px solid #dee2e6;
   word-break: break-word;
 }
 
 .mapping-arrow {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 800;
   color: #667eea;
   flex-shrink: 0;
+  animation: slideArrow 1s infinite;
+}
+
+@keyframes slideArrow {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
 }
 
 .mapping-target {
   flex: 1;
-  padding: 8px 12px;
-  background: #f0f4ff;
-  border-radius: 4px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+  border-radius: 6px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: #667eea;
   border: 1px solid #d5deff;
   word-break: break-word;
@@ -110,13 +137,14 @@
 .preview-data-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .table-container {
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid #e9ecef;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .data-table {
@@ -134,11 +162,12 @@
 }
 
 .data-table th {
-  padding: 12px 16px;
+  padding: 14px 16px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.2px;
 }
 
 .data-table th:last-child {
@@ -147,11 +176,12 @@
 
 .data-table tbody tr {
   border-bottom: 1px solid #e9ecef;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
 }
 
 .data-table tbody tr:hover {
   background-color: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .data-table tbody tr.even {
@@ -163,7 +193,7 @@
 }
 
 .data-table td {
-  padding: 12px 16px;
+  padding: 14px 16px;
   color: #333;
   border-right: 1px solid #e9ecef;
 }
@@ -173,15 +203,15 @@
 }
 
 .col-no {
-  width: 40px;
+  width: 50px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 700;
   color: #999;
   background: #f8f9fa;
 }
 
 .data-cell {
-  max-width: 200px;
+  max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -190,6 +220,7 @@
 .null-value {
   color: #ccc;
   font-style: italic;
+  font-weight: 400;
 }
 
 @media (max-width: 1024px) {
@@ -203,19 +234,30 @@
 
   .data-table th,
   .data-table td {
-    padding: 10px 12px;
+    padding: 12px 12px;
   }
 }
 
 @media (max-width: 768px) {
   .data-preview-container {
     padding: 16px;
+    gap: 20px;
   }
 
   .preview-header {
     flex-direction: column;
-    text-align: center;
+    text-align: left;
     align-items: flex-start;
+    gap: 12px;
+  }
+
+  .preview-title {
+    font-size: 18px;
+  }
+
+  .success-badge {
+    width: 100%;
+    text-align: center;
   }
 
   .mapping-grid {
@@ -228,7 +270,12 @@
 
   .data-table th,
   .data-table td {
-    padding: 8px;
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+
+  .col-no {
+    width: 40px;
   }
 
   .data-cell {

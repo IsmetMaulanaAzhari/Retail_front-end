@@ -14,6 +14,7 @@ const apiClient = axios.create({
 // Add request interceptor
 apiClient.interceptors.request.use(
   (config) => {
+    console.log('[API] Request:', config.method.toUpperCase(), config.url)
     return config
   },
   (error) => {
@@ -24,17 +25,36 @@ apiClient.interceptors.request.use(
 // Add response interceptor
 apiClient.interceptors.response.use(
   (response) => {
+    console.log('[API] Response OK:', response.status)
     return response.data
   },
   (error) => {
+    console.log('[API] Error:', error.message, error.response?.status)
     const message = error.response?.data?.message || error.message || 'Terjadi kesalahan'
     return Promise.reject({
       status: error.response?.status,
       message,
-      data: error.response?.data
+      data: error.response?.data,
+      isNetworkError: !error.response
     })
   }
 )
+
+/**
+ * Check if Backend is online
+ * @returns {Promise<boolean>}
+ */
+export const checkBackendHealth = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL.replace('/api', '')}/docs`, { 
+      timeout: 5000 
+    })
+    return true
+  } catch (error) {
+    console.log('[API] Backend health check failed:', error.message)
+    return false
+  }
+}
 
 /**
  * Upload CSV file dan process dengan ML
@@ -45,16 +65,30 @@ export const uploadFile = async (file) => {
   const formData = new FormData()
   formData.append('file', file)
 
-  return axios.post(
-    `${API_BASE_URL}/upload`,
-    formData,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      timeout: API_TIMEOUT,
+  try {
+    console.log('[API] Uploading file:', file.name)
+    const response = await axios.post(
+      `${API_BASE_URL}/upload`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        timeout: 60000, // 60s untuk upload
+      }
+    )
+    console.log('[API] Upload success')
+    return response.data
+  } catch (error) {
+    console.log('[API] Upload error:', error.message)
+    if (error.code === 'ECONNABORTED') {
+      throw new Error('Timeout - Backend tidak merespons. Pastikan Backend running di http://localhost:8000')
     }
-  ).then((response) => response.data)
+    if (!error.response) {
+      throw new Error(`Network Error - Backend tidak dapat diakses di http://localhost:8000. Status: ${error.message}`)
+    }
+    throw new Error(error.response?.data?.detail || error.response?.data?.message || 'Gagal upload file')
+  }
 }
 
 /**

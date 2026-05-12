@@ -4,6 +4,28 @@
   gap: 16px;
 }
 
+.backend-error-banner {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 2px solid #ef4444;
+  border-radius: 8px;
+  padding: 16px;
+  color: #991b1b;
+  font-weight: 600;
+  font-size: 14px;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .upload-area {
   position: relative;
   border: 2px dashed rgba(255, 255, 255, 0.3);
@@ -18,11 +40,14 @@
 .upload-area:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
 }
 
 .upload-area.drag-over {
   background: rgba(102, 126, 234, 0.3);
   border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+  transform: scale(1.02);
 }
 
 .file-input {
@@ -40,31 +65,33 @@
 }
 
 .upload-icon {
-  font-size: 48px;
+  font-size: 56px;
   animation: bounce 2s infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 @keyframes bounce {
   0%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px) scale(1.1);
   }
 }
 
 .upload-title {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 700;
   margin: 0;
   color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .upload-description {
   font-size: 14px;
   margin: 0;
-  opacity: 0.8;
-  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .progress-container {
@@ -75,24 +102,27 @@
 
 .progress-bar {
   width: 100%;
-  height: 6px;
+  height: 8px;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);
   transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
 }
 
 .progress-text {
   text-align: center;
   font-size: 12px;
   margin-top: 8px;
-  opacity: 0.9;
-  font-weight: 500;
+  opacity: 0.95;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .loading-spinner {
@@ -102,19 +132,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   backdrop-filter: blur(5px);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.25);
   border-top-color: white;
+  border-right-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes spin {
@@ -125,30 +157,65 @@
 
 .loading-spinner p {
   color: white;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .upload-info {
   background: rgba(255, 255, 255, 0.1);
-  padding: 16px;
+  padding: 20px;
   border-radius: 8px;
-  border-left: 4px solid rgba(255, 255, 255, 0.3);
+  border-left: 4px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
 }
 
 .info-title {
-  margin: 0 0 8px 0;
+  margin: 0 0 12px 0;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .info-text {
-  margin: 0;
+  margin: 0 0 12px 0;
   font-size: 13px;
   line-height: 1.6;
-  opacity: 0.9;
-  color: rgba(255, 255, 255, 0.9);
+  opacity: 0.95;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.sample-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sample-columns strong {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.columns-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.columns-list span {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 @media (max-width: 768px) {
@@ -157,14 +224,36 @@
   }
 
   .upload-icon {
-    font-size: 36px;
+    font-size: 44px;
   }
 
   .upload-title {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .upload-description {
+    font-size: 13px;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+
+  .loading-spinner p {
+    font-size: 13px;
+  }
+
+  .upload-info {
+    padding: 16px;
+  }
+
+  .info-title {
+    font-size: 13px;
+  }
+
+  .info-text {
     font-size: 12px;
   }
 }
