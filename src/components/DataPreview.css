@@ -1,17 +1,15 @@
 .data-preview-container {
-  background: white;
+  background: #1e293b;
   border-radius: 12px;
   padding: 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 28px;
-  backdrop-filter: blur(10px);
 }
 
 .data-preview-empty {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px dashed rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 80px 24px;
   text-align: center;
@@ -28,26 +26,25 @@
   align-items: center;
   gap: 16px;
   padding-bottom: 20px;
-  border-bottom: 3px solid #f0f0f0;
+  border-bottom: 3px solid #334155;
 }
 
 .preview-title {
   margin: 0;
   font-size: 22px;
   font-weight: 800;
-  color: #333;
+  color: #f1f5f9;
   letter-spacing: -0.5px;
 }
 
 .success-badge {
-  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  background: #10b981;
   color: white;
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 800;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
   letter-spacing: 0.3px;
 }
 
@@ -61,7 +58,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 800;
-  color: #333;
+  color: #f1f5f9;
   text-transform: uppercase;
   letter-spacing: 1px;
   display: flex;
@@ -80,35 +77,33 @@
   align-items: center;
   gap: 12px;
   padding: 14px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f3 100%);
+  background: #0f172a;
   border-radius: 10px;
-  border: 1px solid #e9ecef;
+  border: 1px solid #334155;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .mapping-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border-color: #d5deff;
+  border-color: #475569;
 }
 
 .mapping-source {
   flex: 1;
   padding: 10px 14px;
-  background: white;
+  background: #1e293b;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: #555;
-  border: 1px solid #dee2e6;
+  color: #cbd5e1;
+  border: 1px solid #334155;
   word-break: break-word;
 }
 
 .mapping-arrow {
   font-size: 18px;
   font-weight: 800;
-  color: #667eea;
+  color: #3b82f6;
   flex-shrink: 0;
   animation: slideArrow 1s infinite;
 }
@@ -125,12 +120,12 @@
 .mapping-target {
   flex: 1;
   padding: 10px 14px;
-  background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+  background: rgba(59, 130, 246, 0.1);
   border-radius: 6px;
   font-size: 13px;
   font-weight: 700;
-  color: #667eea;
-  border: 1px solid #d5deff;
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.2);
   word-break: break-word;
 }
 
@@ -143,8 +138,7 @@
 .table-container {
   overflow-x: auto;
   border-radius: 12px;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #334155;
 }
 
 .data-table {
@@ -154,7 +148,7 @@
 }
 
 .data-table thead {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #334155;
   color: white;
   position: sticky;
   top: 0;
@@ -166,7 +160,7 @@
   text-align: left;
   font-weight: 700;
   white-space: nowrap;
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
   letter-spacing: 0.2px;
 }
 
@@ -175,27 +169,26 @@
 }
 
 .data-table tbody tr {
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid #334155;
   transition: all 0.2s ease;
 }
 
 .data-table tbody tr:hover {
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: #334155;
 }
 
 .data-table tbody tr.even {
-  background: white;
+  background: #1e293b;
 }
 
 .data-table tbody tr.odd {
-  background: #fafbfc;
+  background: #0f172a;
 }
 
 .data-table td {
   padding: 14px 16px;
-  color: #333;
-  border-right: 1px solid #e9ecef;
+  color: #f1f5f9;
+  border-right: 1px solid #334155;
 }
 
 .data-table td:last-child {
@@ -206,8 +199,8 @@
   width: 50px;
   text-align: center;
   font-weight: 700;
-  color: #999;
-  background: #f8f9fa;
+  color: #94a3b8;
+  background: #334155;
 }
 
 .data-cell {
@@ -218,7 +211,7 @@
 }
 
 .null-value {
-  color: #ccc;
+  color: #64748b;
   font-style: italic;
   font-weight: 400;
 }
