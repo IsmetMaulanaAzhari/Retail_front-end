@@ -61,19 +61,19 @@ function App() {
               className={`tab ${activeTab === 'upload' ? 'active' : ''}`}
               onClick={() => setActiveTab('upload')}
             >
-              📤 Upload File
+              <i className="fas fa-upload"></i> Upload File
             </button>
             <button
               className={`tab ${activeTab === 'preview' ? 'active' : ''}`}
               onClick={() => setActiveTab('preview')}
             >
-              📊 Preview Data
+              <i className="fas fa-chart-bar"></i> Preview Data
             </button>
             <button
               className={`tab ${activeTab === 'dashboard' ? 'active' : ''}`}
               onClick={() => setActiveTab('dashboard')}
             >
-              📈 Dashboard
+              <i className="fas fa-chart-line"></i> Dashboard
             </button>
           </div>
 

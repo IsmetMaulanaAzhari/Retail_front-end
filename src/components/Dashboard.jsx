@@ -52,7 +52,7 @@ const Dashboard = ({ refreshTrigger }) => {
     return (
       <div className="dashboard-container">
         <div className="error-state">
-          <p className="error-icon">⚠️</p>
+          <p className="error-icon"><i className="fas fa-exclamation-triangle"></i></p>
           <h3>Gagal Memuat Data</h3>
           <p>{error}</p>
           <button className="retry-btn" onClick={loadDashboardData}>
@@ -66,33 +66,33 @@ const Dashboard = ({ refreshTrigger }) => {
   return (
     <div className="dashboard-container">
       <div className="dashboard-header">
-        <h2 className="dashboard-title">📈 Dashboard</h2>
+        <h2 className="dashboard-title"><i className="fas fa-chart-line"></i> Dashboard</h2>
         <button className="refresh-btn" onClick={loadDashboardData}>
-          🔄 Refresh
+          <i className="fas fa-sync-alt"></i> Refresh
         </button>
       </div>
 
       <div className="stats-grid">
         <StatCard
-          icon="📊"
+          icon={<i className="fas fa-chart-bar"></i>}
           title="Total Records"
           value={totalRecords.toLocaleString('id-ID')}
           color="blue"
         />
         <StatCard
-          icon="📁"
+          icon={<i className="fas fa-folder"></i>}
           title="Data Sources"
           value={new Set(dashboardData?.map(d => d.source_file) || []).size}
           color="green"
         />
         <StatCard
-          icon="✓"
+          icon={<i className="fas fa-check"></i>}
           title="Processed"
           value={dashboardData?.length || 0}
           color="purple"
         />
         <StatCard
-          icon="⏱"
+          icon={<i className="fas fa-clock"></i>}
           title="Last Updated"
           value={dashboardData?.[0]?.processed_at ? new Date(dashboardData[0].processed_at).toLocaleDateString('id-ID') : 'N/A'}
           color="orange"
@@ -101,7 +101,7 @@ const Dashboard = ({ refreshTrigger }) => {
 
       {dashboardData && dashboardData.length > 0 ? (
         <div className="data-grid-section">
-          <h3 className="section-title">📋 Data Terbaru</h3>
+          <h3 className="section-title"><i className="fas fa-list"></i> Data Terbaru</h3>
           <div className="table-wrapper">
             <table className="data-table">
               <thead>

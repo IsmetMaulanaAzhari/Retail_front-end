@@ -5,7 +5,7 @@ const DataPreview = ({ mappingResult, previewData, fileName }) => {
   if (!mappingResult && !previewData) {
     return (
       <div className="data-preview-empty">
-        <p>📤 Upload file CSV untuk melihat hasil mapping dan preview data</p>
+        <p><i className="fas fa-upload"></i> Upload file CSV untuk melihat hasil mapping dan preview data</p>
       </div>
     )
   }
@@ -14,8 +14,8 @@ const DataPreview = ({ mappingResult, previewData, fileName }) => {
     <div className="data-preview-container">
       {fileName && (
         <div className="preview-header">
-          <h3 className="preview-title">📊 Hasil Processing: {fileName}</h3>
-          <span className="success-badge">✓ Berhasil Diproses</span>
+          <h3 className="preview-title"><i className="fas fa-chart-bar"></i> Hasil Processing: {fileName}</h3>
+          <span className="success-badge"><i className="fas fa-check"></i> Berhasil Diproses</span>
         </div>
       )}
 

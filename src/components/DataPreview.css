@@ -80,12 +80,6 @@
   background: #0f172a;
   border-radius: 10px;
   border: 1px solid #334155;
-  transition: all 0.3s ease;
-}
-
-.mapping-item:hover {
-  transform: translateY(-2px);
-  border-color: #475569;
 }
 
 .mapping-source {

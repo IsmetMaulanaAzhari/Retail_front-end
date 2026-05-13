@@ -37,12 +37,11 @@
 }
 
 .refresh-btn:hover {
-  transform: translateY(-3px);
   background: #2563eb;
 }
 
 .refresh-btn:active {
-  transform: translateY(-1px);
+  background: #1d4ed8;
 }
 
 .stats-grid {
@@ -56,15 +55,14 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 20px;
+  padding: 24px;
   border-radius: 12px;
   border-left: 5px solid;
-  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
+  /* hover effect removed */
 }
 
 .stat-card.stat-blue {
@@ -89,6 +87,25 @@
 
 .stat-icon {
   font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card.stat-blue .stat-icon {
+  color: #3b82f6;
+}
+
+.stat-card.stat-green .stat-icon {
+  color: #10b981;
+}
+
+.stat-card.stat-purple .stat-icon {
+  color: #8b5cf6;
+}
+
+.stat-card.stat-orange .stat-icon {
+  color: #f59e0b;
 }
 
 .stat-content {

@@ -23,13 +23,13 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
 
     // Validate file type
     if (!file.name.endsWith('.csv')) {
-      onUploadError?.('❌ Hanya file CSV yang diizinkan')
+      onUploadError?.('Hanya file CSV yang diizinkan')
       return
     }
 
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
-      onUploadError?.('❌ Ukuran file terlalu besar (max 10MB)')
+      onUploadError?.('Ukuran file terlalu besar (max 10MB)')
       return
     }
 
@@ -37,7 +37,7 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
     const isOnline = await checkBackendHealth()
     setBackendOnline(isOnline)
     if (!isOnline) {
-      onUploadError?.('⚠️ Backend tidak terhubung. Pastikan Backend FastAPI running di http://localhost:8000')
+      onUploadError?.('Backend tidak terhubung. Pastikan Backend FastAPI running di http://localhost:8000')
       return
     }
 
@@ -74,7 +74,7 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
       setUploadProgress(0)
       console.error('Upload error:', error)
       const errorMsg = error.message || 'Gagal upload file'
-      onUploadError?.(`❌ ${errorMsg}`)
+      onUploadError?.(`${errorMsg}`)
     }
   }
 
@@ -101,7 +101,7 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
     <div className="file-upload-container">
       {backendOnline === false && (
         <div className="backend-error-banner">
-          ⚠️ Backend tidak terhubung - Pastikan Backend FastAPI running di http://localhost:8000
+          <i className="fas fa-exclamation-triangle"></i> Backend tidak terhubung - Pastikan Backend FastAPI running di http://localhost:8000
         </div>
       )}
 
@@ -122,13 +122,18 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
         />
 
         <label htmlFor="csv-input" className="upload-label">
-          <div className="upload-icon">📁</div>
+          <div className="upload-icon"><i className="fas fa-folder"></i></div>
           <h3 className="upload-title">Pilih atau Drag File CSV</h3>
           <p className="upload-description">
             Dukungan: CSV (max 10MB)
           </p>
-          {isLoading && (
-            <div className="progress-container">
+        </label>
+
+        {isLoading && (
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Memproses file dengan ML...</p>
+            <div className="progress-container-inline">
               <div className="progress-bar">
                 <div
                   className="progress-fill"
@@ -137,19 +142,12 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
               </div>
               <p className="progress-text">{Math.round(uploadProgress)}%</p>
             </div>
-          )}
-        </label>
-
-        {isLoading && (
-          <div className="loading-spinner">
-            <div className="spinner"></div>
-            <p>Memproses file dengan ML...</p>
           </div>
         )}
       </div>
 
       <div className="upload-info">
-        <h4 className="info-title">📋 Format File CSV</h4>
+        <h4 className="info-title"><i className="fas fa-list"></i> Format File CSV</h4>
         <p className="info-text">
           File CSV harus memiliki kolom-kolom seperti: ID, Nama, Harga, Stok, Kategori, dll.
           Sistem akan otomatis mendeteksi dan memetakan kolom ke standar BigQuery.

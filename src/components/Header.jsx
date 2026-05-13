@@ -7,7 +7,7 @@ const Header = () => {
       <div className="header-container">
         <div className="header-content">
           <div className="logo-section">
-            <h1 className="logo">📊 Retail DW</h1>
+            <h1 className="logo"><i className="fas fa-chart-bar"></i> Retail DW</h1>
             <p className="subtitle">Data Warehouse Management System</p>
           </div>
           <div className="status-badge">
