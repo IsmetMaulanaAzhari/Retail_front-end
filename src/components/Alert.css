@@ -4,14 +4,12 @@
   gap: 14px;
   padding: 16px 20px;
   border-radius: 10px;
-  background: white;
+  background: #1e293b;
   border-left: 5px solid;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   max-width: 550px;
   font-size: 14px;
   font-weight: 600;
-  backdrop-filter: blur(10px);
 }
 
 @keyframes slideIn {
@@ -37,27 +35,27 @@
 }
 
 .alert-success {
-  border-color: #22c55e;
-  background: #f0fdf4;
-  color: #15803d;
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
 }
 
 .alert-error {
   border-color: #ef4444;
-  background: #fef2f2;
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
 }
 
 .alert-warning {
-  border-color: #f97316;
-  background: #fff7ed;
-  color: #92400e;
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
 }
 
 .alert-info {
   border-color: #3b82f6;
-  background: #eff6ff;
-  color: #1e40af;
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
 }
 
 .alert-icon {
