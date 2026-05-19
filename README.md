@@ -2,6 +2,10 @@
 
 Frontend React untuk Retail Data Warehouse yang terintegrasi dengan Machine Learning pipeline dan Backend FastAPI.
 
+Login sekarang memakai role:
+- `admin` untuk dashboard / visualisasi data
+- `user` untuk upload data
+
 ## 🎯 Fitur Utama
 
 - **📤 File Upload**: Upload file CSV dengan validasi format dan ukuran
@@ -15,6 +19,10 @@ Frontend React untuk Retail Data Warehouse yang terintegrasi dengan Machine Lear
 ### Prerequisites
 - Node.js 16+ dan npm/yarn
 - Backend FastAPI running di `http://localhost:8000`
+
+### Default Credentials (local dev)
+- Admin: `admin` / `admin`
+- User: `user` / `user`
 
 ### Installation
 
@@ -84,6 +92,8 @@ VITE_APP_VERSION=0.1.0
 - Progress indicator
 - Info tentang format file
 
+> Catatan: fitur upload hanya muncul untuk role `user`.
+
 ### DataPreview
 - Menampilkan hasil mapping kolom
 - Preview data dengan table
@@ -94,6 +104,8 @@ VITE_APP_VERSION=0.1.0
 - Tabel data terbaru dari BigQuery
 - Refresh button
 - Error handling
+
+> Catatan: dashboard hanya muncul untuk role `admin`.
 
 ### Alert
 - Notifikasi success/error/warning/info
@@ -177,6 +189,11 @@ Development server sudah otomatis reload saat file berubah.
 ### API Connection Error
 - Pastikan Backend FastAPI running di `http://localhost:8000`
 - Check VITE_API_BASE_URL di .env
+
+### Login Failed
+- Pastikan username/password sesuai role yang dipilih.
+- Untuk `admin`, gunakan `admin / admin`.
+- Untuk `user`, gunakan `user / user`.
 
 ### File Upload Failed
 - Pastikan file format CSV

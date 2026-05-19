@@ -14,6 +14,12 @@ const apiClient = axios.create({
 // Add request interceptor
 apiClient.interceptors.request.use(
   (config) => {
+    // Attach Authorization header when token available
+    const token = localStorage.getItem('access_token')
+    if (token) {
+      config.headers = config.headers || {}
+      config.headers.Authorization = `Bearer ${token}`
+    }
     console.log('[API] Request:', config.method.toUpperCase(), config.url)
     return config
   },
@@ -67,18 +73,12 @@ export const uploadFile = async (file) => {
 
   try {
     console.log('[API] Uploading file:', file.name)
-    const response = await axios.post(
-      `${API_BASE_URL}/upload`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        timeout: 60000, // 60s untuk upload
-      }
-    )
+    const response = await apiClient.post('/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 60000,
+    })
     console.log('[API] Upload success')
-    return response.data
+    return response
   } catch (error) {
     console.log('[API] Upload error:', error.message)
     if (error.code === 'ECONNABORTED') {
@@ -88,6 +88,24 @@ export const uploadFile = async (file) => {
       throw new Error(`Network Error - Backend tidak dapat diakses di http://localhost:8000. Status: ${error.message}`)
     }
     throw new Error(error.response?.data?.detail || error.response?.data?.message || 'Gagal upload file')
+  }
+}
+
+/**
+ * Login dan simpan token ke localStorage
+ */
+export const login = async (username, password, role = 'user') => {
+  try {
+    const resp = await axios.post(`${API_BASE_URL}/auth/login`, { username, password, role })
+    const token = resp.data?.access_token
+    if (token) {
+      localStorage.setItem('access_token', token)
+      localStorage.setItem('user_role', resp.data?.role || role)
+      localStorage.setItem('username', resp.data?.username || username)
+    }
+    return resp.data
+  } catch (err) {
+    throw err.response?.data || { message: 'Login failed' }
   }
 }
 
