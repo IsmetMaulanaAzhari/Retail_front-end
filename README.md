@@ -2,7 +2,7 @@
 
 Frontend React untuk Retail Data Warehouse yang terintegrasi dengan Machine Learning pipeline dan Backend FastAPI.
 
-Login sekarang memakai role:
+Login sekarang otomatis mendeteksi role dari username/password yang cocok:
 - `admin` untuk dashboard / visualisasi data
 - `user` untuk upload data
 

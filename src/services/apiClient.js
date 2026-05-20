@@ -94,13 +94,13 @@ export const uploadFile = async (file) => {
 /**
  * Login dan simpan token ke localStorage
  */
-export const login = async (username, password, role = 'user') => {
+export const login = async (username, password) => {
   try {
-    const resp = await axios.post(`${API_BASE_URL}/auth/login`, { username, password, role })
+    const resp = await axios.post(`${API_BASE_URL}/auth/login`, { username, password })
     const token = resp.data?.access_token
     if (token) {
       localStorage.setItem('access_token', token)
-      localStorage.setItem('user_role', resp.data?.role || role)
+      localStorage.setItem('user_role', resp.data?.role || '')
       localStorage.setItem('username', resp.data?.username || username)
     }
     return resp.data

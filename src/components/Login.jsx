@@ -5,14 +5,13 @@ import './Login.css'
 export default function Login({ onLoginSuccess, showAlert }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState('user')
   const [loading, setLoading] = useState(false)
 
   const submit = async (e) => {
     e.preventDefault()
     setLoading(true)
     try {
-      const result = await login(username, password, role)
+      const result = await login(username, password)
       setLoading(false)
       onLoginSuccess(result)
     } catch (err) {
@@ -30,32 +29,17 @@ export default function Login({ onLoginSuccess, showAlert }) {
           <h2>Masuk untuk melanjutkan</h2>
           <p className="login-copy">
             Admin dapat melihat dashboard dan visualisasi data.
+          </p>
+          <p>
             User digunakan untuk upload data.
           </p>
-
-          <div className="login-hints">
-            <div>
-              <span>Admin</span>
-              <strong>admin / admin</strong>
-            </div>
-            <div>
-              <span>User</span>
-              <strong>user / user</strong>
-            </div>
-          </div>
         </div>
 
         <form className="login-card" onSubmit={submit}>
           <div className="login-card-head">
-            <span className="login-badge">{role === 'admin' ? 'Admin Session' : 'User Session'}</span>
+            <span className="login-badge">Session Auto-Detect</span>
             <h3>Login</h3>
           </div>
-
-          <label>Role</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="user">User - Upload Data</option>
-            <option value="admin">Admin - Dashboard</option>
-          </select>
 
           <label>Username</label>
           <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Masukkan username" />

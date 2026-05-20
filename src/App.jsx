@@ -67,11 +67,15 @@ function App() {
 
   const content = isAuthenticated ? (
     <div className="content">
-      <div style={{ textAlign: 'right', marginBottom: 8 }}>
-        <button onClick={handleLogout}>Logout</button>
-        <span style={{ marginLeft: 12, color: '#cbd5e1', fontSize: 13 }}>
-          Role: {userRole || 'unknown'}
-        </span>
+      <div className="session-bar">
+        <div className={`role-badge role-${userRole || 'unknown'}`}>
+          <span className="role-badge-label">Role</span>
+          <span className="role-badge-value">{userRole || 'unknown'}</span>
+        </div>
+
+        <button className="logout-button" onClick={handleLogout} type="button">
+          Logout
+        </button>
       </div>
 
       {isUser && (
