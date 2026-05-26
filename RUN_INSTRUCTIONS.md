@@ -66,10 +66,10 @@ npm run dev
 
 **Solution**:
 1. Pastikan Backend running di Terminal 1
-2. Check status: http://localhost:8000/docs di browser
-3. Jika using different port, update `.env`:
+2. Check status: https://apiretail.ramidzelab.my.id/docs di browser
+3. Jika ingin override backend, update `.env`:
    ```
-   VITE_API_BASE_URL=http://localhost:YOUR_PORT/api
+   VITE_API_BASE_URL=https://apiretail.ramidzelab.my.id/api
    ```
 
 ### Issue: "Port 8000 already in use"

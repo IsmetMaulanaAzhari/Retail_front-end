@@ -37,7 +37,7 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
     const isOnline = await checkBackendHealth()
     setBackendOnline(isOnline)
     if (!isOnline) {
-      onUploadError?.('Backend tidak terhubung. Pastikan Backend FastAPI running di http://localhost:8000')
+      onUploadError?.('Backend tidak terhubung. Pastikan Backend FastAPI running di https://apiretail.ramidzelab.my.id')
       return
     }
 
@@ -101,7 +101,7 @@ const FileUpload = ({ onUploadSuccess, onUploadError }) => {
     <div className="file-upload-container">
       {backendOnline === false && (
         <div className="backend-error-banner">
-          <i className="fas fa-exclamation-triangle"></i> Backend tidak terhubung - Pastikan Backend FastAPI running di http://localhost:8000
+          <i className="fas fa-exclamation-triangle"></i> Backend tidak terhubung - Pastikan Backend FastAPI running di https://apiretail.ramidzelab.my.id
         </div>
       )}
 

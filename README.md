@@ -72,7 +72,7 @@ Buat file `.env` berdasarkan `.env.example`:
 
 ```env
 # API Configuration
-VITE_API_BASE_URL=http://localhost:8000/api
+VITE_API_BASE_URL=https://apiretail.ramidzelab.my.id/api
 VITE_API_TIMEOUT=30000
 
 # Application Configuration
@@ -187,7 +187,7 @@ Development server sudah otomatis reload saat file berubah.
 ## 🚨 Troubleshooting
 
 ### API Connection Error
-- Pastikan Backend FastAPI running di `http://localhost:8000`
+- Pastikan Backend FastAPI running di `https://apiretail.ramidzelab.my.id`
 - Check VITE_API_BASE_URL di .env
 
 ### Login Failed

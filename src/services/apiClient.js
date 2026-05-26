@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://apiretail.ramidzelab.my.id/api'
+const BACKEND_BASE_URL = API_BASE_URL.replace(/\/api$/, '')
 const API_TIMEOUT = import.meta.env.VITE_API_TIMEOUT || 30000
 
 const apiClient = axios.create({
@@ -52,7 +53,7 @@ apiClient.interceptors.response.use(
  */
 export const checkBackendHealth = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL.replace('/api', '')}/docs`, { 
+    await axios.get(`${BACKEND_BASE_URL}/docs`, { 
       timeout: 5000 
     })
     return true
@@ -82,10 +83,10 @@ export const uploadFile = async (file) => {
   } catch (error) {
     console.log('[API] Upload error:', error.message)
     if (error.code === 'ECONNABORTED') {
-      throw new Error('Timeout - Backend tidak merespons. Pastikan Backend running di http://localhost:8000')
+      throw new Error(`Timeout - Backend tidak merespons. Pastikan Backend running di ${BACKEND_BASE_URL}`)
     }
     if (!error.response) {
-      throw new Error(`Network Error - Backend tidak dapat diakses di http://localhost:8000. Status: ${error.message}`)
+      throw new Error(`Network Error - Backend tidak dapat diakses di ${BACKEND_BASE_URL}. Status: ${error.message}`)
     }
     throw new Error(error.response?.data?.detail || error.response?.data?.message || 'Gagal upload file')
   }
