@@ -112,10 +112,11 @@ export const login = async (username, password) => {
 
 /**
  * Fetch dashboard data dari BigQuery
+ * @param {Object} params - page dan page_size
  * @returns {Promise} Data dengan preview
  */
-export const fetchDashboardData = async () => {
-  return apiClient.get('/data')
+export const fetchDashboardData = async (params = {}) => {
+  return apiClient.get('/data', { params })
 }
 
 /**
