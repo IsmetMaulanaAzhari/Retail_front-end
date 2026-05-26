@@ -25,8 +25,9 @@ export default function Login({ onLoginSuccess, showAlert }) {
     <div className="login-page">
       <div className="login-shell">
         <div className="login-hero">
-          <p className="login-kicker">Retail DW Access</p>
-          <h2>Masuk untuk melanjutkan</h2>
+          <p className="login-kicker">Retail Access</p>
+          <h3>Integrasi Data Heterogen pada Sektor Retail</h3>
+          {/* <p>Masuk untuk melanjutkan</p> */}
           <p className="login-copy">
             Admin dapat melihat dashboard dan visualisasi data.
           </p>

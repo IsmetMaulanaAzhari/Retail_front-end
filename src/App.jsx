@@ -67,17 +67,6 @@ function App() {
 
   const content = isAuthenticated ? (
     <div className="content">
-      <div className="session-bar">
-        <div className={`role-badge role-${userRole || 'unknown'}`}>
-          <span className="role-badge-label">Role</span>
-          <span className="role-badge-value">{userRole || 'unknown'}</span>
-        </div>
-
-        <button className="logout-button" onClick={handleLogout} type="button">
-          Logout
-        </button>
-      </div>
-
       {isUser && (
         <>
           <div className="tabs">
@@ -145,7 +134,11 @@ function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header
+        userRole={userRole}
+        isAuthenticated={isAuthenticated}
+        onLogout={handleLogout}
+      />
 
       <div className="app-container">
         <div className="alert-container">

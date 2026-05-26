@@ -113,6 +113,7 @@ const Dashboard = ({ refreshTrigger }) => {
                   <th>Stock</th>
                   <th>Category</th>
                   <th>Source File</th>
+                  <th>Uploaded By</th>
                   <th>Processed At</th>
                 </tr>
               </thead>
@@ -128,6 +129,7 @@ const Dashboard = ({ refreshTrigger }) => {
                     <td className="col-source">
                       <span className="badge">{row.source_file || '-'}</span>
                     </td>
+                    <td className="col-user">{row.uploaded_by || '-'}</td>
                     <td className="col-date">
                       {row.processed_at ? new Date(row.processed_at).toLocaleDateString('id-ID') : '-'}
                     </td>
