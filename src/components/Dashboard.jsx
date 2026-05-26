@@ -64,7 +64,7 @@ const Dashboard = ({ refreshTrigger }) => {
     }
 
     if (category.includes('pembersih') || category.includes('kebersihan')) {
-      return 'Lainnya'
+      return 'Kebersihan'
     }
 
     return 'Lainnya'
@@ -78,15 +78,17 @@ const Dashboard = ({ refreshTrigger }) => {
     }, {})
   ).map(([name, value]) => ({ name, value }))
 
-  const categoryChartData = Object.entries(
-    (dashboardData || []).reduce((acc, row) => {
-      const key = normalizeCategoryForVisualization(row.category)
-      acc[key] = (acc[key] || 0) + 1
-      return acc
-    }, {})
-  ).map(([name, value]) => ({ name, value }))
+  const categoryOrder = ['Lainnya', 'Sembako', 'Makanan dan Minuman', 'Perawatan', 'Kebersihan', 'Rokok']
+  const categoryCounts = (dashboardData || []).reduce((acc, row) => {
+    const key = normalizeCategoryForVisualization(row.category)
+    acc[key] = (acc[key] || 0) + 1
+    return acc
+  }, {})
+  const categoryChartData = categoryOrder
+    .map((name) => ({ name, value: categoryCounts[name] || 0 }))
+    .filter((item) => item.value > 0)
 
-  const chartColors = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444']
+  const chartColors = ['#60a5fa', '#22c55e', '#f59e0b', '#a78bfa', '#14b8a6', '#ef4444']
 
   useEffect(() => {
     loadDashboardData()
@@ -98,7 +100,7 @@ const Dashboard = ({ refreshTrigger }) => {
     try {
       const result = await fetchDashboardData({ page, page_size: pageSize })
       setDashboardData(result.data || [])
-      setTotalRecords(result.total_records || 0)
+      setTotalRecords(result.total_records || result.total_records_fetched || 0)
       setPageDataCount(result.data?.length || 0)
     } catch (err) {
       setError(err.message || 'Gagal memuat data dashboard')
@@ -119,10 +121,11 @@ const Dashboard = ({ refreshTrigger }) => {
   )
 
   const chartTooltipStyle = {
-    background: '#0f172a',
-    border: '1px solid #334155',
-    borderRadius: '10px',
+    background: '#0b1220',
+    border: '1px solid #475569',
+    borderRadius: '12px',
     color: '#f8fafc',
+    boxShadow: '0 14px 30px rgba(15, 23, 42, 0.45)',
   }
 
   const totalPages = Math.max(Math.ceil(totalRecords / pageSize), 1)
@@ -226,7 +229,7 @@ const Dashboard = ({ refreshTrigger }) => {
                   <XAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
                   <YAxis tick={{ fill: '#cbd5e1', fontSize: 12 }} allowDecimals={false} />
                   <Tooltip contentStyle={chartTooltipStyle} />
-                  <Bar dataKey="value" fill="#3b82f6" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="value" fill="#60a5fa" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
