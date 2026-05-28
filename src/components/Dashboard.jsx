@@ -243,7 +243,7 @@ const Dashboard = ({ refreshTrigger }) => {
       </div>
 
       <div className="chart-grid">
-        <div className="chart-card">
+        <div className="chart-card chart-card-bar">
           <div className="chart-card-header">
             <h3 className="section-title"><i className="fas fa-layer-group"></i> Distribusi Upload per User</h3>
             <p className="chart-subtitle">Jumlah data berdasarkan username peng-upload, dari seluruh data yang ada</p>
@@ -267,7 +267,7 @@ const Dashboard = ({ refreshTrigger }) => {
           </div>
         </div>
 
-        <div className="chart-card">
+        <div className="chart-card chart-card-bar">
           <div className="chart-card-header">
             <h3 className="section-title"><i className="fas fa-file-alt"></i> File yang Diupload</h3>
             <p className="chart-subtitle">Daftar file CSV yang masuk, dihitung dari seluruh data yang ada</p>
@@ -290,8 +290,10 @@ const Dashboard = ({ refreshTrigger }) => {
             )}
           </div>
         </div>
+      </div>
 
-        <div className="chart-card">
+      <div className="chart-grid-donut">
+        <div className="chart-card chart-card-donut">
           <div className="chart-card-header">
             <h3 className="section-title"><i className="fas fa-chart-pie"></i> Komposisi Kategori</h3>
             <p className="chart-subtitle">Distribusi kategori dari seluruh data yang ada</p>
