@@ -14,6 +14,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('upload')
   const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem('access_token')))
   const [userRole, setUserRole] = useState(localStorage.getItem('user_role') || '')
+  const [username, setUsername] = useState(localStorage.getItem('username') || '')
 
   const isAdmin = userRole === 'admin'
   const isUser = userRole === 'user'
@@ -52,6 +53,7 @@ function App() {
   const handleLoginSuccess = (result) => {
     setIsAuthenticated(true)
     setUserRole(result?.role || localStorage.getItem('user_role') || 'user')
+    setUsername(result?.username || localStorage.getItem('username') || '')
     showAlert('Login berhasil', 'success')
   }
 
@@ -61,6 +63,7 @@ function App() {
     localStorage.removeItem('username')
     setIsAuthenticated(false)
     setUserRole('')
+    setUsername('')
     setActiveTab('upload')
     showAlert('Logged out', 'info')
   }
@@ -136,6 +139,7 @@ function App() {
     <div className="app">
       <Header
         userRole={userRole}
+        username={username}
         isAuthenticated={isAuthenticated}
         onLogout={handleLogout}
       />

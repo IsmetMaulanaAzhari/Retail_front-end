@@ -1,7 +1,9 @@
 import React from 'react'
 import './Header.css'
 
-const Header = ({ userRole, isAuthenticated, onLogout }) => {
+const Header = ({ userRole, username, isAuthenticated, onLogout }) => {
+  const displayName = username || userRole || 'unknown'
+
   return (
     <header className="header">
       <div className="header-container">
@@ -18,8 +20,8 @@ const Header = ({ userRole, isAuthenticated, onLogout }) => {
 
             {isAuthenticated && (
               <div className={`role-badge role-${userRole || 'unknown'}`}>
-                <span className="role-badge-label">Role</span>
-                <span className="role-badge-value">{userRole || 'unknown'}</span>
+                <span className="role-badge-label">Username</span>
+                <span className="role-badge-value">{displayName}</span>
               </div>
             )}
 
