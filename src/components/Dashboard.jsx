@@ -17,7 +17,9 @@ import './Dashboard.css'
 
 const Dashboard = ({ refreshTrigger }) => {
   const [dashboardData, setDashboardData] = useState(null)
+  const [allData, setAllData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isChartLoading, setIsChartLoading] = useState(false)
   const [error, setError] = useState(null)
   const [totalRecords, setTotalRecords] = useState(0)
   const [page, setPage] = useState(1)
@@ -70,8 +72,16 @@ const Dashboard = ({ refreshTrigger }) => {
     return 'Lainnya'
   }
 
-  const sourceChartData = Object.entries(
-    (dashboardData || []).reduce((acc, row) => {
+  const uploaderChartData = Object.entries(
+    (allData || []).reduce((acc, row) => {
+      const key = row.uploaded_by || 'Unknown'
+      acc[key] = (acc[key] || 0) + 1
+      return acc
+    }, {})
+  ).map(([name, value]) => ({ name, value }))
+
+  const fileChartData = Object.entries(
+    (allData || []).reduce((acc, row) => {
       const key = row.source_file || 'Unknown'
       acc[key] = (acc[key] || 0) + 1
       return acc
@@ -79,7 +89,7 @@ const Dashboard = ({ refreshTrigger }) => {
   ).map(([name, value]) => ({ name, value }))
 
   const categoryOrder = ['Lainnya', 'Sembako', 'Makanan dan Minuman', 'Perawatan', 'Kebersihan', 'Rokok']
-  const categoryCounts = (dashboardData || []).reduce((acc, row) => {
+  const categoryCounts = (allData || []).reduce((acc, row) => {
     const key = normalizeCategoryForVisualization(row.category)
     acc[key] = (acc[key] || 0) + 1
     return acc
@@ -94,6 +104,10 @@ const Dashboard = ({ refreshTrigger }) => {
     loadDashboardData()
   }, [refreshTrigger, page])
 
+  useEffect(() => {
+    loadAllDataForCharts()
+  }, [refreshTrigger])
+
   const loadDashboardData = async () => {
     setIsLoading(true)
     setError(null)
@@ -107,6 +121,19 @@ const Dashboard = ({ refreshTrigger }) => {
       console.error('Dashboard error:', err)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const loadAllDataForCharts = async () => {
+    setIsChartLoading(true)
+    try {
+      const result = await fetchDashboardData({ page: 1, page_size: 10000 })
+      setAllData(result.data || [])
+    } catch (err) {
+      console.error('Chart data error:', err)
+      setAllData([])
+    } finally {
+      setIsChartLoading(false)
     }
   }
 
@@ -218,13 +245,15 @@ const Dashboard = ({ refreshTrigger }) => {
       <div className="chart-grid">
         <div className="chart-card">
           <div className="chart-card-header">
-            <h3 className="section-title"><i className="fas fa-layer-group"></i> Distribusi Data per File</h3>
-            <p className="chart-subtitle">Jumlah record pada data yang sedang tampil di dashboard</p>
+            <h3 className="section-title"><i className="fas fa-layer-group"></i> Distribusi Upload per User</h3>
+            <p className="chart-subtitle">Jumlah data berdasarkan username peng-upload, dari seluruh data yang ada</p>
           </div>
           <div className="chart-box chart-box-bar">
-            {sourceChartData.length > 0 ? (
+            {isChartLoading ? (
+              <div className="chart-empty">Memuat seluruh data untuk visualisasi...</div>
+            ) : uploaderChartData.length > 0 ? (
               <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={sourceChartData}>
+                <BarChart data={uploaderChartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
                   <YAxis tick={{ fill: '#cbd5e1', fontSize: 12 }} allowDecimals={false} />
@@ -240,8 +269,32 @@ const Dashboard = ({ refreshTrigger }) => {
 
         <div className="chart-card">
           <div className="chart-card-header">
+            <h3 className="section-title"><i className="fas fa-file-alt"></i> File yang Diupload</h3>
+            <p className="chart-subtitle">Daftar file CSV yang masuk, dihitung dari seluruh data yang ada</p>
+          </div>
+          <div className="chart-box chart-box-bar">
+            {isChartLoading ? (
+              <div className="chart-empty">Memuat seluruh data untuk visualisasi...</div>
+            ) : fileChartData.length > 0 ? (
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={fileChartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                  <XAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
+                  <YAxis tick={{ fill: '#cbd5e1', fontSize: 12 }} allowDecimals={false} />
+                  <Tooltip contentStyle={chartTooltipStyle} />
+                  <Bar dataKey="value" fill="#22c55e" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="chart-empty">Belum ada file upload untuk divisualisasikan</div>
+            )}
+          </div>
+        </div>
+
+        <div className="chart-card">
+          <div className="chart-card-header">
             <h3 className="section-title"><i className="fas fa-chart-pie"></i> Komposisi Kategori</h3>
-            <p className="chart-subtitle">Distribusi kategori dari data yang tersedia</p>
+            <p className="chart-subtitle">Distribusi kategori dari seluruh data yang ada</p>
           </div>
           <div className="chart-box chart-box-pie">
             {categoryChartData.length > 0 ? (

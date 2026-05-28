@@ -2,7 +2,8 @@ import React from 'react'
 import './Header.css'
 
 const Header = ({ userRole, username, isAuthenticated, onLogout }) => {
-  const displayName = username || userRole || 'unknown'
+  const displayName = username || 'unknown'
+  const displayRole = userRole || 'unknown'
 
   return (
     <header className="header">
@@ -22,6 +23,8 @@ const Header = ({ userRole, username, isAuthenticated, onLogout }) => {
               <div className={`role-badge role-${userRole || 'unknown'}`}>
                 <span className="role-badge-label">Username</span>
                 <span className="role-badge-value">{displayName}</span>
+                <span className="role-badge-label" style={{ marginTop: '4px', opacity: 0.8 }}>Role</span>
+                <span className="role-badge-value">{displayRole}</span>
               </div>
             )}
 
