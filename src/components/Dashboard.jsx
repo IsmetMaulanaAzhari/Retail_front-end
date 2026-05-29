@@ -12,6 +12,8 @@ import {
   Pie,
   Cell,
   Legend,
+  Sector,
+  Rectangle,
 } from 'recharts'
 import './Dashboard.css'
 
@@ -25,6 +27,9 @@ const Dashboard = ({ refreshTrigger }) => {
   const [page, setPage] = useState(1)
   const [pageSize] = useState(500)
   const [pageDataCount, setPageDataCount] = useState(0)
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(null)
+  const [activeUploaderIndex, setActiveUploaderIndex] = useState(null)
+  const [activeFileIndex, setActiveFileIndex] = useState(null)
 
   const normalizeCategoryForVisualization = (value) => {
     const category = (value || '').toString().trim().toLowerCase()
@@ -155,6 +160,57 @@ const Dashboard = ({ refreshTrigger }) => {
     boxShadow: '0 14px 30px rgba(15, 23, 42, 0.45)',
   }
 
+  const chartTooltipLabelStyle = {
+    color: '#f8fafc',
+    fontWeight: 700,
+  }
+
+  const chartTooltipItemStyle = {
+    color: '#f8fafc',
+  }
+
+  const renderActiveCategoryShape = (props) => {
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill, payload } = props
+
+    return (
+      <g>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius + 12}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+      </g>
+    )
+  }
+
+  const renderActiveBarShape = (props) => {
+    const { x, y, width, height, fill } = props
+
+    return (
+      <Rectangle
+        x={x - 3}
+        y={y - 10}
+        width={width + 6}
+        height={height + 10}
+        fill={fill}
+        radius={[10, 10, 0, 0]}
+        opacity={1}
+      />
+    )
+  }
+
+  const getBarCellFill = (index, activeIndex, baseColor) => {
+    if (activeIndex === null) {
+      return baseColor
+    }
+
+    return index === activeIndex ? baseColor : 'rgba(148, 163, 184, 0.22)'
+  }
+
   const totalPages = Math.max(Math.ceil(totalRecords / pageSize), 1)
 
   if (isLoading) {
@@ -257,8 +313,26 @@ const Dashboard = ({ refreshTrigger }) => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
                   <YAxis tick={{ fill: '#cbd5e1', fontSize: 12 }} allowDecimals={false} />
-                  <Tooltip contentStyle={chartTooltipStyle} />
-                  <Bar dataKey="value" fill="#60a5fa" radius={[8, 8, 0, 0]} />
+                  <Tooltip
+                    contentStyle={chartTooltipStyle}
+                    labelStyle={chartTooltipLabelStyle}
+                    itemStyle={chartTooltipItemStyle}
+                  />
+                  <Bar
+                    dataKey="value"
+                    fill="#60a5fa"
+                    radius={[8, 8, 0, 0]}
+                    activeBar={renderActiveBarShape}
+                    onMouseEnter={(_, index) => setActiveUploaderIndex(index)}
+                    onMouseLeave={() => setActiveUploaderIndex(null)}
+                  >
+                    {uploaderChartData.map((entry, index) => (
+                      <Cell
+                        key={`uploader-cell-${index}`}
+                        fill={getBarCellFill(index, activeUploaderIndex, '#60a5fa')}
+                      />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -281,8 +355,26 @@ const Dashboard = ({ refreshTrigger }) => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="name" tick={{ fill: '#cbd5e1', fontSize: 12 }} />
                   <YAxis tick={{ fill: '#cbd5e1', fontSize: 12 }} allowDecimals={false} />
-                  <Tooltip contentStyle={chartTooltipStyle} />
-                  <Bar dataKey="value" fill="#22c55e" radius={[8, 8, 0, 0]} />
+                  <Tooltip
+                    contentStyle={chartTooltipStyle}
+                    labelStyle={chartTooltipLabelStyle}
+                    itemStyle={chartTooltipItemStyle}
+                  />
+                  <Bar
+                    dataKey="value"
+                    fill="#22c55e"
+                    radius={[8, 8, 0, 0]}
+                    activeBar={renderActiveBarShape}
+                    onMouseEnter={(_, index) => setActiveFileIndex(index)}
+                    onMouseLeave={() => setActiveFileIndex(null)}
+                  >
+                    {fileChartData.map((entry, index) => (
+                      <Cell
+                        key={`file-cell-${index}`}
+                        fill={getBarCellFill(index, activeFileIndex, '#22c55e')}
+                      />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -309,12 +401,21 @@ const Dashboard = ({ refreshTrigger }) => {
                     innerRadius={60}
                     outerRadius={100}
                     paddingAngle={3}
+                    activeIndex={activeCategoryIndex ?? undefined}
+                    activeShape={renderActiveCategoryShape}
+                    onMouseEnter={(_, index) => setActiveCategoryIndex(index)}
+                    onMouseLeave={() => setActiveCategoryIndex(null)}
+                    onClick={(_, index) => setActiveCategoryIndex(index)}
                   >
                     {categoryChartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
                     ))}
                   </Pie>
-                  <Tooltip contentStyle={chartTooltipStyle} />
+                  <Tooltip
+                    contentStyle={chartTooltipStyle}
+                    labelStyle={chartTooltipLabelStyle}
+                    itemStyle={chartTooltipItemStyle}
+                  />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
